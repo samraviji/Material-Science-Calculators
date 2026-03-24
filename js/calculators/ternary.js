@@ -1,11 +1,13 @@
 function calculateTernary() {
-  const e1Symbol = document.getElementById("ternary-e1")?.value;
-  const e2Symbol = document.getElementById("ternary-e2")?.value;
-  const e3Symbol = document.getElementById("ternary-e3")?.value;
+  console.log("calculateTernary fired");
 
-  const c1 = parseFloat(document.getElementById("ternary-c1")?.value);
-  const c2 = parseFloat(document.getElementById("ternary-c2")?.value);
-  const c3 = parseFloat(document.getElementById("ternary-c3")?.value);
+  const e1Select = document.getElementById("ternary-e1");
+  const e2Select = document.getElementById("ternary-e2");
+  const e3Select = document.getElementById("ternary-e3");
+
+  const c1Input = document.getElementById("ternary-c1");
+  const c2Input = document.getElementById("ternary-c2");
+  const c3Input = document.getElementById("ternary-c3");
 
   const resultBox = document.getElementById("ternary-result");
   const extraBox = document.getElementById("ternary-extra");
@@ -13,11 +15,18 @@ function calculateTernary() {
   const vecNode = document.getElementById("ternary-vec");
   const deltaNode = document.getElementById("ternary-delta");
 
-  if (!resultBox || !extraBox || !aawNode || !vecNode || !deltaNode) return;
+  if (!e1Select || !e2Select || !e3Select || !c1Input || !c2Input || !c3Input || !resultBox || !extraBox || !aawNode || !vecNode || !deltaNode) {
+    console.error("Ternary DOM elements missing");
+    return;
+  }
 
-  const e1 = elementsData.find(el => el.s === e1Symbol);
-  const e2 = elementsData.find(el => el.s === e2Symbol);
-  const e3 = elementsData.find(el => el.s === e3Symbol);
+  const e1 = elementsData.find(el => el.s === e1Select.value);
+  const e2 = elementsData.find(el => el.s === e2Select.value);
+  const e3 = elementsData.find(el => el.s === e3Select.value);
+
+  const c1 = parseFloat(c1Input.value);
+  const c2 = parseFloat(c2Input.value);
+  const c3 = parseFloat(c3Input.value);
 
   if (!e1 || !e2 || !e3) {
     resultBox.style.display = "block";
@@ -52,10 +61,8 @@ function calculateTernary() {
   const x2 = c2 / 100;
   const x3 = c3 / 100;
 
-  // Average atomic weight
   const avgAtomicWeight = x1 * e1.aw + x2 * e2.aw + x3 * e3.aw;
 
-  // Convert at% -> wt%
   const m1 = x1 * e1.aw;
   const m2 = x2 * e2.aw;
   const m3 = x3 * e3.aw;
@@ -65,10 +72,8 @@ function calculateTernary() {
   const wt2 = (m2 / massTotal) * 100;
   const wt3 = (m3 / massTotal) * 100;
 
-  // Average VEC
   const avgVEC = x1 * e1.v + x2 * e2.v + x3 * e3.v;
 
-  // Size misfit parameter delta (%)
   const rBar = x1 * e1.rad + x2 * e2.rad + x3 * e3.rad;
   const delta = Math.sqrt(
     x1 * Math.pow(1 - e1.rad / rBar, 2) +
