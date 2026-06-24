@@ -89,5 +89,11 @@ function calculateMasterAlloy() {
 
   output += `<p><b>Final melt mass:</b> ${finalMass.toFixed(4)} g</p>`;
 
-  resultBox.innerHTML = output;
+resultBox.style.display = "block";
+resultBox.style.marginTop = "18px";
+resultBox.style.padding = "16px";
+resultBox.style.border = "2px solid #1677ff";
+resultBox.style.background = "#f8fbff";
+resultBox.innerHTML = output;
+resultBox.scrollIntoView({ behavior: "smooth", block: "center" });
 }
