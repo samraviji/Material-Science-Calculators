@@ -33,11 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const ternaryBtn = document.getElementById("ternary-btn");
   if (ternaryBtn) ternaryBtn.addEventListener("click", calculateTernary);
 
-const maElements = document.getElementById("ma-elements");
-if (maElements) maElements.addEventListener("change", generateMasterAlloyInputs);
+  const maElements = document.getElementById("ma-elements");
+  if (maElements && typeof generateMasterAlloyInputs === "function") {
+    maElements.addEventListener("change", generateMasterAlloyInputs);
+    generateMasterAlloyInputs();
+  }
 
-const masterAlloyBtn = document.getElementById("masteralloy-btn");
-if (masterAlloyBtn) masterAlloyBtn.addEventListener("click", calculateMasterAlloy);
-
-generateMasterAlloyInputs();
+  const masterAlloyBtn = document.getElementById("masteralloy-btn");
+  if (masterAlloyBtn && typeof calculateMasterAlloy === "function") {
+    masterAlloyBtn.addEventListener("click", calculateMasterAlloy);
+  }
 });
