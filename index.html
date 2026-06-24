@@ -22,6 +22,7 @@
     <button id="btn-density" class="tab-btn" data-mode="density">Density</button>
     <button id="btn-diffusion" class="tab-btn" data-mode="diffusion">Diffusion</button>
     <button id="btn-ternary" class="tab-btn" data-mode="ternary">Ternary Alloy</button>
+    <button id="btn-masteralloy" class="tab-btn" data-mode="masteralloy">Master Alloy</button>
     <button id="btn-structures" class="tab-btn" data-mode="structures">Crystal Structures</button>
   </div>
 
@@ -87,6 +88,15 @@
           <h2>Ternary Alloy Toolkit</h2>
           <p>Choose three elements and convert ternary at% to wt%, calculate average atomic weight, VEC, and size-misfit parameter.</p>
         </div>
+
+ 	<div id="theory-masteralloy" class="theory-block" style="display:none;">
+  	<h2>Master Alloy Addition Calculator</h2>
+  	<p>Calculate how much Al-based master alloy is needed to adjust alloy composition.</p>
+  	<div class="math-block">
+    	x = M(Ctarget − Coriginal) / (Cmaster − Ctarget)
+ 	 </div>
+  	<p>This tool assumes each master alloy adds one main element, such as Al–10Mn, Al–20Fe, or Al–10Cr.</p>
+	</div>
 
         <div id="theory-structures" class="theory-block" style="display:none;">
           <h2>Crystal Structure Reference</h2>
@@ -304,56 +314,58 @@
       </section>
 
       <section id="view-ternary" class="calc-view">
+        <div class="panel-card">
+          <div class="triple-inputs">
+            <div class="input-group"><label for="ternary-e1">Element 1</label><select id="ternary-e1"></select></div>
+            <div class="input-group"><label for="ternary-e2">Element 2</label><select id="ternary-e2"></select></div>
+            <div class="input-group"><label for="ternary-e3">Element 3</label><select id="ternary-e3"></select></div>
+          </div>
+
+          <div class="triple-inputs">
+            <div class="input-group"><label for="ternary-c1">At% Element 1</label><input type="number" id="ternary-c1" value="33.33" step="any" /></div>
+            <div class="input-group"><label for="ternary-c2">At% Element 2</label><input type="number" id="ternary-c2" value="33.33" step="any" /></div>
+            <div class="input-group"><label for="ternary-c3">At% Element 3</label><input type="number" id="ternary-c3" value="33.34" step="any" /></div>
+          </div>
+
+          <button class="primary-btn" id="ternary-btn">Calculate Ternary Descriptors</button>
+          <div id="ternary-result" class="calc-result"></div>
+        </div>
+
+        <div class="triple-grid three" id="ternary-extra" style="display:none; max-width:900px;">
+          <div class="metric-card"><div class="metric-title">Average atomic weight</div><div class="metric-value" id="ternary-aaw">—</div></div>
+          <div class="metric-card"><div class="metric-title">Average VEC</div><div class="metric-value accent-purple" id="ternary-vec">—</div></div>
+          <div class="metric-card"><div class="metric-title">δ size misfit</div><div class="metric-value accent-teal" id="ternary-delta">—</div></div>
+        </div>
+      </section>
+
+<section id="view-masteralloy" class="calc-view">
   <div class="panel-card">
-    <div class="triple-inputs">
+    <div class="input-row">
       <div class="input-group">
-        <label for="ternary-e1">Element 1</label>
-        <select id="ternary-e1"></select>
+        <label for="ma-mass">Original melt mass</label>
+        <input type="number" id="ma-mass" placeholder="Example: 1000" step="any" />
       </div>
+
       <div class="input-group">
-        <label for="ternary-e2">Element 2</label>
-        <select id="ternary-e2"></select>
-      </div>
-      <div class="input-group">
-        <label for="ternary-e3">Element 3</label>
-        <select id="ternary-e3"></select>
+        <label for="ma-elements">Number of elements</label>
+        <select id="ma-elements">
+          <option value="1">1 Element</option>
+          <option value="2">2 Elements</option>
+          <option value="3">3 Elements</option>
+        </select>
       </div>
     </div>
 
-    <div class="triple-inputs">
-      <div class="input-group">
-        <label for="ternary-c1">At% Element 1</label>
-        <input type="number" id="ternary-c1" value="33.33" step="any" />
-      </div>
-      <div class="input-group">
-        <label for="ternary-c2">At% Element 2</label>
-        <input type="number" id="ternary-c2" value="33.33" step="any" />
-      </div>
-      <div class="input-group">
-        <label for="ternary-c3">At% Element 3</label>
-        <input type="number" id="ternary-c3" value="33.34" step="any" />
-      </div>
-    </div>
+    <div id="ma-input-area"></div>
 
-    <button type="button" class="primary-btn" id="ternary-btn" onclick="calculateTernary()">Calculate Ternary Descriptors</button>
-    <div id="ternary-result" class="calc-result"></div>
-  </div>
+    <button class="primary-btn" id="masteralloy-btn">
+      Calculate Master Alloy Addition
+    </button>
 
-  <div class="triple-grid three" id="ternary-extra" style="display:none; max-width:900px;">
-    <div class="metric-card">
-      <div class="metric-title">Average atomic weight</div>
-      <div class="metric-value" id="ternary-aaw">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Average VEC</div>
-      <div class="metric-value accent-purple" id="ternary-vec">—</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">δ size misfit</div>
-      <div class="metric-value accent-teal" id="ternary-delta">—</div>
-    </div>
+    <div id="masteralloy-result" class="calc-result"></div>
   </div>
 </section>
+
       <section id="view-structures" class="calc-view">
         <div class="structure-grid">
           <div class="structure-card"><b>FCC</b><br><br>Coordination number: 12<br>Atomic packing factor: 0.74<br>Slip systems: high<br>Common traits: ductile, close-packed, strong formability.<div class="mini-note">Examples: Al, Cu, Ni, Ag, Au, Pt.</div></div>
@@ -362,48 +374,22 @@
           <div class="structure-card"><b>Temperature-sensitive phase notes</b><br><br>Fe: BCC at room T, FCC at elevated T.<br>Ti: HCP at room T, BCC at elevated T.<br>Co: HCP at lower T, FCC at higher T.</div></div>
         </div>
       </section>
-
-      <section style="max-width:1000px;margin:40px auto;padding:20px;background:white;border-radius:12px;">
-        <h2>Hume Rothery Calculator &amp; Rules Explained</h2>
-
-        <p>
-          This Hume Rothery calculator helps determine whether two elements can form a substitutional solid solution.
-          The Hume-Rothery rules consider atomic size difference, crystal structure, electronegativity,
-          and valency compatibility between elements.
-        </p>
-
-        <h2>What does this Hume Rothery calculator do?</h2>
-
-        <p>
-          This material science calculator allows students, researchers, and engineers to quickly evaluate alloy compatibility.
-          It checks key Hume-Rothery conditions and provides insights into phase formation, solid solution tendency,
-          and alloy design feasibility.
-        </p>
-
-        <h2>Why use this tool?</h2>
-
-        <p>
-          Instead of manually comparing atomic radii, electronegativity, and structure,
-          this Hume Rothery calculator automates the process using real elemental data.
-          It is especially useful for metallurgy students, alloy design researchers,
-          and engineers working on material selection.
-        </p>
-      </section>
     </main>
   </div>
 
   <script src="js/data.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/element-details.js"></script>
-  <script src="js/calculators/hume.js"></script>
-  <script src="js/calculators/explorer.js"></script>
-  <script src="js/calculators/hallpetch.js"></script>
-  <script src="js/calculators/atwt.js"></script>
-  <script src="js/calculators/wtat.js"></script>
-  <script src="js/calculators/density.js"></script>
-  <script src="js/calculators/diffusion.js"></script>
-  <script src="js/calculators/ternary.js"></script>
-  <script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/element-details.js"></script>
+<script src="js/calculators/hume.js"></script>
+<script src="js/calculators/explorer.js"></script>
+<script src="js/calculators/hallpetch.js"></script>
+<script src="js/calculators/atwt.js"></script>
+<script src="js/calculators/wtat.js"></script>
+<script src="js/calculators/density.js"></script>
+<script src="js/calculators/diffusion.js"></script>
+<script src="js/calculators/ternary.js"></script>
+<script src="js/calculators/masteralloy.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
