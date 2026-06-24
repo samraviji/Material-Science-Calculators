@@ -254,8 +254,7 @@ function showCalc(mode) {
   if (targetTheory) targetTheory.style.display = "block";
 
   const periodicContainer = document.getElementById("periodic-container");
-  const hideTable = ["hall", "diffusion", "ternary", "structures"].includes(mode);
-  if (periodicContainer) periodicContainer.style.display = hideTable ? "none" : "block";
+const hideTable = ["hall", "diffusion", "ternary", "masteralloy", "structures"].includes(mode);  if (periodicContainer) periodicContainer.style.display = hideTable ? "none" : "block";
 
   if (mode === "hall" && typeof drawHallChart === "function") drawHallChart();
 
