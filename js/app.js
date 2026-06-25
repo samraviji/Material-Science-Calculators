@@ -33,6 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const ternaryBtn = document.getElementById("ternary-btn");
   if (ternaryBtn) ternaryBtn.addEventListener("click", calculateTernary);
 
+const maMode = document.getElementById("ma-mode");
+if (maMode && typeof generateMasterAlloyInputs === "function") {
+  maMode.addEventListener("change", generateMasterAlloyInputs);
+}
   const maElements = document.getElementById("ma-elements");
   if (maElements && typeof generateMasterAlloyInputs === "function") {
     maElements.addEventListener("change", generateMasterAlloyInputs);
