@@ -348,7 +348,7 @@
 
 <div class="input-group">
   <label for="ma-mode">Calculation mode</label>
-  <select id="ma-mode">
+<select id="ma-mode" onchange="generateMasterAlloyInputs()">
     <option value="baseline">Modify existing baseline alloy</option>
     <option value="scratch">Make alloy from scratch</option>
   </select>
@@ -356,7 +356,7 @@
 
       <div class="input-group">
         <label for="ma-elements">Number of elements</label>
-<select id="ma-elements">
+<select id="ma-elements" onchange="generateMasterAlloyInputs()">
   <option value="1">1 Element</option>
   <option value="2">2 Elements</option>
   <option value="3">3 Elements</option>
