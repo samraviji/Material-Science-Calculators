@@ -59,6 +59,7 @@ function calculateMasterAlloy() {
   const resultBox = document.getElementById("masteralloy-result");
 
   if (isNaN(M) || M <= 0) {
+    resultBox.style.display = "block";
     resultBox.innerHTML = "Please enter a valid mass.";
     return;
   }
@@ -76,20 +77,23 @@ function calculateMasterAlloy() {
   }
 
   if ([...orig, ...target, ...master].some(v => isNaN(v))) {
+    resultBox.style.display = "block";
     resultBox.innerHTML = "Please fill all fields.";
     return;
   }
 
   if (mode === "baseline") {
-  if (n > 3) {
-    resultBox.innerHTML =
-      "Baseline mode currently supports up to 3 elements. For 4–6 elements, use Make alloy from scratch.";
-    return;
-  }
+    if (n > 3) {
+      resultBox.style.display = "block";
+      resultBox.innerHTML =
+        "Baseline mode currently supports up to 3 elements. For 4–6 elements, use Make alloy from scratch.";
+      return;
+    }
 
-  calculateBaselineMode(M, n, names, orig, target, master, resultBox);
-} else {
-  calculateScratchMode(M, n, names, target, master, resultBox);
+    calculateBaselineMode(M, n, names, orig, target, master, resultBox);
+  } else {
+    calculateScratchMode(M, n, names, target, master, resultBox);
+  }
 }
 
 function calculateBaselineMode(M, n, names, orig, target, master, resultBox) {
@@ -112,6 +116,7 @@ function calculateBaselineMode(M, n, names, orig, target, master, resultBox) {
 
     const det = a1 * b2 - a2 * b1;
     if (Math.abs(det) < 1e-12) {
+      resultBox.style.display = "block";
       resultBox.innerHTML = "No unique solution for 2-element system.";
       return;
     }
@@ -144,6 +149,7 @@ function calculateBaselineMode(M, n, names, orig, target, master, resultBox) {
       c1 * (a2 * b3 - a3 * b2);
 
     if (Math.abs(det) < 1e-12) {
+      resultBox.style.display = "block";
       resultBox.innerHTML = "No unique solution for 3-element system.";
       return;
     }
@@ -167,6 +173,7 @@ function calculateBaselineMode(M, n, names, orig, target, master, resultBox) {
   }
 
   if (additions.some(x => !isFinite(x) || x < 0)) {
+    resultBox.style.display = "block";
     resultBox.innerHTML =
       "Negative or invalid master alloy mass calculated. Target may be unachievable.";
     return;
@@ -201,6 +208,7 @@ function calculateScratchMode(Mfinal, n, names, target, master, resultBox) {
 
   for (let i = 0; i < n; i++) {
     if (master[i] <= target[i]) {
+      resultBox.style.display = "block";
       resultBox.innerHTML =
         `${names[i]}: master alloy wt% must be higher than target wt%.`;
       return;
@@ -209,6 +217,7 @@ function calculateScratchMode(Mfinal, n, names, target, master, resultBox) {
     const x = (Mfinal * target[i]) / master[i];
 
     if (!isFinite(x) || x < 0) {
+      resultBox.style.display = "block";
       resultBox.innerHTML = `Invalid result for ${names[i]}.`;
       return;
     }
@@ -220,6 +229,7 @@ function calculateScratchMode(Mfinal, n, names, target, master, resultBox) {
   const pureAl = Mfinal - totalMaster;
 
   if (pureAl < 0) {
+    resultBox.style.display = "block";
     resultBox.innerHTML =
       "Master alloy additions exceed target final mass. Check target wt% and master alloy wt%.";
     return;
