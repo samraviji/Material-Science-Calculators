@@ -354,28 +354,44 @@
   </select>
 </div>
 
-      <div class="input-group">
-        <label for="ma-elements">Number of elements</label>
-<select id="ma-elements" onchange="generateMasterAlloyInputs()">
-  <option value="1">1 Element</option>
-  <option value="2">2 Elements</option>
-  <option value="3">3 Elements</option>
-  <option value="4">4 Elements</option>
-  <option value="5">5 Elements</option>
-  <option value="6">6 Elements</option>
-</select>
-      </div>
+<div class="panel-card">
+  <div class="input-row">
+    <div class="input-group">
+      <label for="ma-mass" id="ma-mass-label">Baseline alloy mass</label>
+      <input type="number" id="ma-mass" placeholder="Example: 1000" step="any" />
     </div>
 
-    <div id="ma-input-area"></div>
-
-<button class="primary-btn" id="masteralloy-btn" onclick="calculateMasterAlloy()">
-  Calculate Master Alloy Addition
-</button>
-
-    <div id="masteralloy-result" class="calc-result"></div>
+    <div class="input-group">
+      <label for="ma-mode">Calculation mode</label>
+      <select id="ma-mode" onchange="generateMasterAlloyInputs()">
+        <option value="baseline">Modify existing baseline alloy</option>
+        <option value="scratch">Make alloy from scratch</option>
+      </select>
+    </div>
   </div>
-</section>
+
+  <div class="input-row">
+    <div class="input-group">
+      <label for="ma-elements">Number of elements</label>
+      <select id="ma-elements" onchange="generateMasterAlloyInputs()">
+        <option value="1">1 Element</option>
+        <option value="2">2 Elements</option>
+        <option value="3">3 Elements</option>
+        <option value="4">4 Elements</option>
+        <option value="5">5 Elements</option>
+        <option value="6">6 Elements</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="ma-input-area"></div>
+
+  <button class="primary-btn" id="masteralloy-btn" onclick="calculateMasterAlloy()">
+    Calculate Master Alloy Addition
+  </button>
+
+  <div id="masteralloy-result" class="calc-result"></div>
+</div></section>
       <section id="view-structures" class="calc-view">
         <div class="structure-grid">
           <div class="structure-card"><b>FCC</b><br><br>Coordination number: 12<br>Atomic packing factor: 0.74<br>Slip systems: high<br>Common traits: ductile, close-packed, strong formability.<div class="mini-note">Examples: Al, Cu, Ni, Ag, Au, Pt.</div></div>
