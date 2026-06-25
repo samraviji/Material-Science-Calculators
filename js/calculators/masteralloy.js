@@ -1,44 +1,3 @@
-function generateMasterAlloyInputs() {
-  const count = parseInt(document.getElementById("ma-elements").value);
-  const area = document.getElementById("ma-input-area");
-
-  if (!area) return;
-
-  let html = "";
-
-  for (let i = 1; i <= count; i++) {
-    html += `
-      <div class="panel-card" style="margin-top:16px;">
-        <h3>Element ${i}</h3>
-
-        <div class="input-row">
-          <div class="input-group">
-            <label for="ma-name-${i}">Element name</label>
-            <input type="text" id="ma-name-${i}" placeholder="Example: Mn" />
-          </div>
-
-          <div class="input-group">
-            <label for="ma-orig-${i}">Original wt%</label>
-            <input type="number" id="ma-orig-${i}" step="any" placeholder="Example: 0.10" />
-          </div>
-
-          <div class="input-group">
-            <label for="ma-target-${i}">Target wt%</label>
-            <input type="number" id="ma-target-${i}" step="any" placeholder="Example: 0.25" />
-          </div>
-
-          <div class="input-group">
-            <label for="ma-master-${i}">Master alloy wt% of this element</label>
-            <input type="number" id="ma-master-${i}" step="any" placeholder="Example: 10" />
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  area.innerHTML = html;
-}
-
 function calculateMasterAlloy() {
   const M = parseFloat(document.getElementById("ma-mass").value);
   const n = parseInt(document.getElementById("ma-elements").value);
@@ -163,12 +122,6 @@ function calculateMasterAlloy() {
 
   output += `<p><b>Final melt mass:</b> ${finalMass.toFixed(4)} g</p>`;
 
-
- resultBox.style.display = "block";
-resultBox.style.marginTop = "18px";
-resultBox.style.padding = "16px";
-resultBox.style.border = "2px solid #1677ff";
-resultBox.style.background = "#f8fbff";
-resultBox.innerHTML = output;
-resultBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  resultBox.style.display = "block";
+  resultBox.innerHTML = output;
 }
