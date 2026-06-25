@@ -188,12 +188,14 @@ function calculateBaselineMode(M, n, names, orig, target, master, resultBox) {
     const finalWt = (finalElementMass / finalMass) * 100;
 
     output += `
-      <p>
-        <b>${names[i]}</b><br>
-        Add <b>${additions[i].toFixed(4)} g</b> of Al-${names[i]} master alloy (${(master[i] * 100).toFixed(2)} wt%).<br>
-        Final ${names[i]} = ${finalElementMass.toFixed(4)} g → ${finalWt.toFixed(4)} wt%
-      </p>
-    `;
+  <p>
+    <b>${names[i]}</b><br>
+    Original ${names[i]}: ${(orig[i] * 100).toFixed(4)} wt%<br>
+    Target ${names[i]}: ${(target[i] * 100).toFixed(4)} wt%<br>
+    Add <b>${additions[i].toFixed(4)} g</b> of Al-${names[i]} master alloy (${(master[i] * 100).toFixed(2)} wt%).<br>
+    Final ${names[i]} = ${finalElementMass.toFixed(4)} g → ${finalWt.toFixed(4)} wt%
+  </p>
+`;
   }
 
   output += `<p><b>Final melt mass:</b> ${finalMass.toFixed(4)} g</p>`;
